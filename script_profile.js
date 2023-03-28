@@ -4,15 +4,69 @@ let title = document.getElementById("content-title")
 let result = document.querySelector(".main-result")
 let search = document.querySelector(".main-search")
 
-let titlesearch = document.getElementById("byTitle")
+let Login_Form = document.getElementById("Login_Form")
 let actorsearch = document.getElementById("byActor")
 
 let SearchToggle = document.getElementById("Toggle-search")
 
-let item1 = '<div class="result-item"><div class="title"><p>'
-let item2 = '</p></div><button class="add">Add</button></div>'
+//let item1 = '<div class="result-item"><div class="title"><p>'
+//let item2 = '</p></div><button class="add">Add</button></div>'
 
 let actorList = ['chuk','gek','cheburek']
+
+let login = document.getElementById('login')
+let nicknameInput = document.getElementById('nickname')
+let passwordInput = document.getElementById('password')
+let unlog = document.getElementById('unlog')
+
+
+let isLogged = localStorage.getItem('IsLogged')
+window.onload=function(event){
+    event.preventDefault()
+    //alert('Loaded')
+    
+    let nickname = localStorage.getItem('Nickname')
+    console.log(localStorage)
+    if(isLogged){
+        console.log(nickname)
+        profButton.innerHTML = nickname
+        Login_Form.classList.add('closed')
+        unlog.classList.remove('closed')
+        
+    }else{
+        alert('You are not logged')
+        
+        
+    }
+}
+
+unlog.onclick = function(event){
+    localStorage.clear()
+    console.log(localStorage)
+    event.preventDefault()
+    Login_Form.classList.remove('closed')
+    unlog.classList.add('closed')
+    profButton.innerHTML = "Profile"
+}
+
+
+
+login.onclick = function(event){
+    if(nicknameInput.value && passwordInput.value){
+        localStorage.setItem('IsLogged', 1)
+        localStorage.setItem('Nickname', nicknameInput.value )
+        profButton.innerHTML = localStorage.getItem('Nickname')
+        Login_Form.classList.add('closed')
+        unlog.classList.remove('closed')
+    }
+    console.log(localStorage)
+    event.preventDefault()
+}
+
+
+
+
+
 
 
 let profButton = document.getElementById('button2')
@@ -79,38 +133,11 @@ function CreateResultItem(title,year,actorList){
 }
 
 
-find.onclick = function(event){
-    console.log(title.value)
-    //result.innerHTML = title.value;
-    event.preventDefault()
-
-    let resultItem = CreateResultItem(title,2003,actorList)
 
 
-    result.append(resultItem)
-    
-}
-findActor.onclick = function(event){
-    console.log(title.value)
-    //result.innerHTML = title.value;
-    event.preventDefault()
-
-    
-
-
-    result.innerHTML="<div>Action is not added yet</div>"
-    
-}
 
 result.addEventListener('click',function(event){
-    if(event.target.classList.contains('add')){
-        let Add = event.target;
-        let Title = Add.closest('.result-item').children
-        let name = Title[0].children[0].children[0].innerHTML
-        
-        
-        console.log(name)
-    }
+   
     if(event.target.classList.contains('toggle')){
         let Toggle = event.target;
         Toggle.innerHTML = 'Less'
@@ -131,19 +158,4 @@ result.addEventListener('click',function(event){
 
 })
 
-SearchToggle.onclick = function(event){
-    console.log('aaaaaaaaaaaaaaaaaaaa')
-    if(actorsearch.classList.contains('closed')){
-        actorsearch.classList.remove('closed');
-        titlesearch.classList.add('closed');
-        SearchToggle.innerHTML = "<p class='green'>To Search by Title</p>";
-    }else{
-        actorsearch.classList.add('closed');
-        titlesearch.classList.remove('closed');
-        SearchToggle.innerHTML = "<p class='red'>To Search by Actor</p>"
-    }
-    
-    
-    event.preventDefault()
-}
 

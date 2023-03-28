@@ -36,7 +36,7 @@ findUserButton.onclick =function(){
 
 
 
-function CreateResultItem(title,year,actorList,Cont_id){
+function CreateResultItem(title,year,actorList,Cont_id){//create content element
     let resultItem = document.createElement("div")
     resultItem.classList.add("result-item")
 
@@ -86,7 +86,7 @@ function CreateResultItem(title,year,actorList,Cont_id){
 
 
 
-find.onclick = function(event){
+find.onclick = function(event){//searching for content by title name
     console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
@@ -114,7 +114,7 @@ find.onclick = function(event){
     //result.append(resultItem)
     
 }
-findActor.onclick = function(event){
+findActor.onclick = function(event){//searching for content by actor name
     console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
@@ -127,16 +127,22 @@ findActor.onclick = function(event){
 }
 
 result.addEventListener('click',function(event){
-    if(event.target.classList.contains('add')){
-        let Add = event.target;
-        let Title = Add.closest('.result-item').children
-        let name = Title[0].children[0].children[0].innerHTML
-        Add.parentElement.parentElement.style.border = "1px solid greenyellow"
-        setTimeout(()=>{Add.parentElement.parentElement.style.border = "none"},300);
+    if(event.target.classList.contains('add')){//adding content to user favorites
+        let LSisLogged = localStorage.getItem('IsLogged')
+        if(LSisLogged == 1){
+            let Add = event.target;
+            let Title = Add.closest('.result-item').children
+            let name = Title[0].children[0].children[0].innerHTML
+            Add.parentElement.parentElement.style.border = "1px solid greenyellow"
+            setTimeout(()=>{Add.parentElement.parentElement.style.border = "none"},300);
+            console.log(name)
+        }
+        else{
+            alert('you are not logged')
+        }
         
-        console.log(name)
     }
-    if(event.target.classList.contains('toggle')){
+    if(event.target.classList.contains('toggle')){//toggle additional content on content item
         let Toggle = event.target;
         Toggle.innerHTML = 'Less'
         let Result2 = Toggle.parentElement.children[2]
@@ -156,7 +162,7 @@ result.addEventListener('click',function(event){
 
 })
 
-SearchToggle.onclick = function(event){
+SearchToggle.onclick = function(event){//toggle searching parameters from actor to title and back
     console.log('aaaaaaaaaaaaaaaaaaaa')
     if(actorsearch.classList.contains('closed')){
         actorsearch.classList.remove('closed');
@@ -172,3 +178,21 @@ SearchToggle.onclick = function(event){
     event.preventDefault()
 }
 
+
+let isLogged = localStorage.getItem('IsLogged')
+window.onload=function(event){
+    event.preventDefault()
+    //alert('Loaded')
+    
+    let nickname = localStorage.getItem('Nickname')
+    console.log(localStorage)
+    if(isLogged){
+        console.log(nickname)
+        profButton.innerHTML = nickname
+        
+    }else{
+        alert('You are not logged')
+        
+        
+    }
+}
