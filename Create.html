@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
     <div class="top">
@@ -19,16 +18,20 @@
         </div>
     </div>
     <div class="main">
-        <div class="main-search">
-            <button id="Toggle-search"><p class='red'>To Search by Actor</p></button>
-            <form action="" id="byTitle">
-                <input type="text" id="content-title1" class="text">
-                <input type="submit" value="Find by Title" id="find-title"> 
+        <div class="main-search1">
+            <button id="prev">Prev</button>
+            <button id="next">Next</button>
+            <form action="" id="Create_content_form" name="Create">
+                <input name="Title"type="text" id="Create_title" class="text">
+                <input name="Year"type="date" id="Create_year" class="text">
+                <div id="categories"></div>
+                <div id="genres"></div>
+                <input type="submit" value="Create" id="Create_button"> 
+                
             </form>
-            <form action="" id="byActor" class="closed">
-                <input type="text" id="content-title2" class="text">
-                <input type="submit" value="Find by Actor" id="find-actor"> 
-            </form>
+            
+            
+            
         </div>
         <div class="main-result">
            
@@ -39,7 +42,6 @@
 
 
 
-    <script src="script.js"></script>
-    
+    <script src="script_create.js"></script>
 </body>
 </html>

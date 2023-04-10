@@ -40,6 +40,17 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
+}
+.main-search1{
+    height: 400px;
+    margin-top: 20px;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 #content-title{
@@ -182,4 +193,10 @@ body{
 }
 .red{
     color: rgb(255, 47, 47);
+}
+h2{
+    color:white;
+}
+.actors{
+    color:aquamarine
 }

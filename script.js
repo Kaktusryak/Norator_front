@@ -1,6 +1,7 @@
 let find = document.getElementById("find-title")
 let findActor = document.getElementById("find-actor")
-let title = document.getElementById("content-title")
+let title = document.getElementById("content-title1")
+let title2= document.getElementById("content-title2")
 let result = document.querySelector(".main-result")
 let search = document.querySelector(".main-search")
 
@@ -36,7 +37,9 @@ findUserButton.onclick =function(){
 
 
 
-function CreateResultItem(title,year,actorList,Cont_id){//create content element
+function CreateResultItem(title,year,Cont_id){//create content element
+    
+
     let resultItem = document.createElement("div")
     resultItem.classList.add("result-item")
 
@@ -57,13 +60,14 @@ function CreateResultItem(title,year,actorList,Cont_id){//create content element
     toggleButton.classList.add("toggle")
     toggleButton.innerHTML = 'More'
     
-    resultItem2.innerHTML = '<div class="year">'+year +'</div><ul>'
+    
 
-    for(let key in actorList){
-        resultItem2.innerHTML += '<li>' + actorList[key] + '</li>'
-    }
 
-    resultItem2.innerHTML+='</ul>'
+
+
+    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div>'
+    
+    
     resultItem2.setAttribute('CID', Cont_id)
 
     addButton.innerHTML = 'Add'
@@ -87,24 +91,24 @@ function CreateResultItem(title,year,actorList,Cont_id){//create content element
 
 
 find.onclick = function(event){//searching for content by title name
+    result.innerHTML=''
     console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
     let url = 'https://localhost:7117/api/content/getall?FilterParam='+title.value +'&PageNumber=1&PageSize=20'
+    //let mapActors
     
-    let actorList =[]
+    //const actorList =[];
     fetch(url)
         .then(res=>res.json()).then(data => {
             //console.log(data.entities)
             for(let key in data.entities){
                 //console.log(data.entities[key].name)
-                let actorsUrl = 'https://localhost:7117/api/actor/'+ data.entities[key].id
-                fetch(actorsUrl).then(res=>res.json()).then(data=>{
-                    actorList[0]=data.name
-                    console.log(actorList)
-                    
-                })
-                result.append(CreateResultItem(data.entities[key].name, data.entities[key].releaseDate,actorList, data.entities[key].id))
+                
+                //let actorList=new Array()
+                
+                
+                result.append(CreateResultItem(data.entities[key].name, data.entities[key].releaseDate.substring(data.entities[key].releaseDate.length-4), data.entities[key].id))
             }
         } )
     
@@ -115,14 +119,41 @@ find.onclick = function(event){//searching for content by title name
     
 }
 findActor.onclick = function(event){//searching for content by actor name
-    console.log(title.value)
+    
+
+    console.log(title2.value)
     //result.innerHTML = title.value;
     event.preventDefault()
+    result.innerHTML=''
+    console.log(title2.value)
+    //result.innerHTML = title.value;
+    event.preventDefault()
+    let url = 'https://localhost:7117/api/content/getall?ActorName='+title2.value +'&PageNumber=1&PageSize=20'
+    //let mapActors
+    
+    //const actorList =[];
+    fetch(url)
+        .then(res=>res.json()).then(data => {
+            //console.log(data.entities)
+            for(let key in data.entities){
+                //console.log(data.entities[key].name)
+                
+                //let actorList=new Array()
+                
+                
+                result.append(CreateResultItem(data.entities[key].name, data.entities[key].releaseDate.substring(data.entities[key].releaseDate.length-4), data.entities[key].id))
+            }
+        } )
+    console.log(url)
+    
+    //let resultItem = CreateResultItem(title,2003,actorList)
 
+
+    //result.append(resultItem)
     
 
 
-    result.innerHTML="<div>Action is not added yet</div>"
+    //result.innerHTML="<div>Action is not added yet</div>"
     
 }
 
@@ -133,6 +164,22 @@ result.addEventListener('click',function(event){
             let Add = event.target;
             let Title = Add.closest('.result-item').children
             let name = Title[0].children[0].children[0].innerHTML
+            let CID = Add.closest('.result-item').children[2].getAttribute('cid')
+            console.log(CID)
+            fetch('https://localhost:7117/api/user/addContent', 
+            {
+                method: 'POST',
+                headers:{
+                    'accept':'*/*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"userId":localStorage.getItem('UID'), "contentId":CID})
+            }).then(response=>{
+                if(response.status!=200){
+                    console.log('pasasi')
+                }
+            })
+
             Add.parentElement.parentElement.style.border = "1px solid greenyellow"
             setTimeout(()=>{Add.parentElement.parentElement.style.border = "none"},300);
             console.log(name)
@@ -145,6 +192,25 @@ result.addEventListener('click',function(event){
     if(event.target.classList.contains('toggle')){//toggle additional content on content item
         let Toggle = event.target;
         Toggle.innerHTML = 'Less'
+        
+        let Item2 = Toggle.parentElement.children[2]
+        let AC = Item2.children[1]
+
+        AC.innerHTML=''
+        let CID = Item2.getAttribute('cid')
+        let actorsUrl = 'https://localhost:7117/api/content/'+ CID
+        fetch(actorsUrl).then(res=>res.json()).then(data=>{
+            //console.log(data.actorsViewModels)
+            AC.innerHTML+='<ul>'
+            for(let k in data.actorsViewModels){
+                AC.innerHTML+='<li>'+data.actorsViewModels[k].name+'</li>'
+                
+            }
+            AC.innerHTML+='</ul>'
+        
+            
+        })
+
         let Result2 = Toggle.parentElement.children[2]
         if(Result2.classList.contains('closed')){
             Result2.classList.remove('closed')
@@ -195,4 +261,19 @@ window.onload=function(event){
         
         
     }
+    fetch('https://localhost:7117/api/content/gettop20')
+    .then(res=>res.json()).then(data => {
+        console.log(data)
+        for(let key in data){
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            
+            
+            result.append(CreateResultItem(data[key].name, data[key].releaseDate.substring(data[key].releaseDate.length-4), data[key].id))
+        }
+    } )
+
+
+
 }
