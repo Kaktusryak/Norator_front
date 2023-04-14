@@ -18,9 +18,34 @@
         </div>
     </div>
     <div class="main">
+        <div class="main_pagin">
+            <form action="pagin" class="pagination">
+                <button id="prev">Prev</button>
+                <button id="next">Next</button>
+            </form>
+        </div>
+        <div id="Creates">
+            <div class="main_create_genre">
+                <input name="Genre_name"type="text" id="Genre_name" class="text">
+                
+                <input type="submit" value="Create genre" id="Create_genre_button"> 
+                <div id="all_genres">
+
+                </div>
+            </div>
+            <div class="main_create_actor">
+                <input name="Actor_name"type="text" id="Actor_name" class="text">
+                <input name="Actor_year"type="date" id="Actor_year" class="text">
+                <input type="submit" value="Create actor" id="Create_actor_button"> 
+                <div id="all_actors">
+
+                </div>
+            </div>
+        </div>
+        
         <div class="main-search1">
-            <button id="prev">Prev</button>
-            <button id="next">Next</button>
+            
+            
             <form action="" id="Create_content_form" name="Create">
                 <input name="Title"type="text" id="Create_title" class="text">
                 <input name="Year"type="date" id="Create_year" class="text">

@@ -7,6 +7,14 @@ body{
     width: 100%;
     background-color: rgb(51, 51, 51);
 }
+button{
+    width: 150px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
 .top{
     display: flex;
     justify-content: space-between;
@@ -15,14 +23,14 @@ body{
 }
 .top-right-button{
     height: 100%;
-    width: 150px;
+    width: 10vw;
     margin-left: 20px;
     
     border: none;
 }
 .top-left-button{
     height: 100%;
-    width: 150px;
+    width: 10vw;
     font-size: 20px;
     margin-right: 20px;
     border: none;
@@ -48,20 +56,34 @@ body{
     width: 100%;
     background-color: rgb(0, 0, 0);
     display: flex;
+   
     justify-content: center;
     align-items: center;
     color: white;
 }
-
+input[type=submit]{
+    width: 150px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+input[type=text]{
+    
+    background-color: rgb(255, 255, 255);
+    
+}
 #content-title{
     width: 400px;
     height: 40px;
     border: 1px rgb(0, 255, 200) solid;
     border-radius: 20px;
-    background-color: rgb(51, 51, 51);
+    
 }
 .text{
     padding-left: 20px;
+    
 }
 #find-title{
     width: 120px;
@@ -111,7 +133,7 @@ body{
     
     width: 600px;
     display: flex;
-    flex-direction: column;
+    
     background-color: rgb(27, 27, 27);
     justify-content: space-between;
     align-items:start;
@@ -163,7 +185,7 @@ body{
 #button1{
     background-color: black;
     border-radius: 20px;
-    border:1px solid fuchsia;
+    border:1px solid rgb(255, 255, 255);
     color: white;
     font-size: 20px;
 }
@@ -172,7 +194,14 @@ body{
 #button2{
     background-color: black;
     border-radius: 20px 0 0 20px;
-    border:1px solid rgb(255, 238, 0);
+    border:1px solid rgb(255, 255, 255);
+    color: white;
+    font-size: 20px;
+}
+#button3{
+    background-color: black;
+    border-radius: 20px;
+    border:1px solid rgb(255, 255, 255);
     color: white;
     font-size: 20px;
 }
@@ -200,3 +229,45 @@ h2{
 .actors{
     color:aquamarine
 }
+.categ{
+    color: darksalmon;
+}
+.pagination{
+    width: 200px;
+    height: 50px;
+}
+.pagination button{
+    width: 100px;
+    height: 50px;
+    
+    background-color: rgb(0, 0, 0);
+}
+.remove{
+    border-color:crimson;
+}
+.delete{
+    border-color:crimson;
+}
+.main_create_genre{
+    height: 100px;
+    width: 100%;
+}
+.main_create_actor{
+    height: 100px;
+    width: 100%;
+}
+#Creates{
+    height: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+#all_actors{
+    color: white;
+}
+#all_genres{
+    color: white;
+}
+
+

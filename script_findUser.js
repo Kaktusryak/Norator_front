@@ -65,7 +65,7 @@ function CreateResultItem(title,year,Cont_id){//create content element
 
 
 
-    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div>'
+    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div><div class=genres_item></div><div class=category_item></div>'
     
     
     resultItem2.setAttribute('CID', Cont_id)
@@ -277,7 +277,7 @@ result.addEventListener('click',function(event){
                 //let actorList=new Array()
                 
                 
-                result.append(CreateResultItem(data.contentViewModels[key].name, data.contentViewModels[key].releaseDate.substring(data.contentViewModels[key].releaseDate.length-4), data.contentViewModels[key].id))
+                result.append(CreateResultItem(data.contentViewModels[key].name, data.contentViewModels[key].releaseDate.substring(0,4), data.contentViewModels[key].id))
             }
             
         
@@ -303,18 +303,31 @@ result.addEventListener('click',function(event){
         
         let Item2 = Toggle.parentElement.children[2]
         let AC = Item2.children[1]
-
+        let GC = Item2.children[2]
+        let CC = Item2.children[3]
         AC.innerHTML=''
+        GC.innerHTML=''
+        CC.innerHTML=''
         let CID = Item2.getAttribute('cid')
         let actorsUrl = 'https://localhost:7117/api/content/'+ CID
         fetch(actorsUrl).then(res=>res.json()).then(data=>{
             //console.log(data.actorsViewModels)
             AC.innerHTML+='<ul>'
+            GC.innerHTML+='<ul>'
+            CC.innerHTML+='<p>'
             for(let k in data.actorsViewModels){
                 AC.innerHTML+='<li>'+data.actorsViewModels[k].name+'</li>'
                 
             }
+            for(let k in data.genreViewModels){
+                GC.innerHTML+='<li>'+data.genreViewModels[k].name+'</li>'
+                
+            }
+            CC.innerHTML+=data.contentCategory
+
             AC.innerHTML+='</ul>'
+            GC.innerHTML+='</ul>'
+            CC.innerHTML+='</p>'
         
             
         })

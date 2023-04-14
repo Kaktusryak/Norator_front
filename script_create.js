@@ -20,12 +20,164 @@ findUserButton.onclick =function(){
     window.location.href="findUser.html"
 }
 
+let page = 1
+let psize = 5
+
+
+let Create_Actor_Name = document.getElementById('Actor_name')
+let Create_Actor_Year = document.getElementById('Actor_year')
+let Create_Actor_Button = document.getElementById('Create_actor_button')
+let Create_Genre_Name = document.getElementById('Genre_name')
+let Create_Genre_Button = document.getElementById('Create_genre_button')
+let Creates = document.getElementById('Creates')
+
+
+Creates.addEventListener('click',function(event){
+    event.preventDefault()
+    if(event.target.classList.contains('delete_genre')){
+        let Delete_genre_button = event.target
+        let gid = Delete_genre_button.parentElement.getAttribute('gid')
+        let url = 'https://localhost:7117/api/genre/' + gid
+        fetch(url, 
+            {
+                method: 'DELETE'            
+            }).then(response=>{
+                if(response.status!=200){
+                    console.log('pasasiDel')
+                    
+                }
+            })
+        setTimeout(location.reload(),1000)
+        
+    }
+    if(event.target.classList.contains('delete_actor')){
+        let Delete_actor_button = event.target
+        let aid = Delete_actor_button.parentElement.getAttribute('aid')
+        let url = 'https://localhost:7117/api/actor/' + aid
+        fetch(url, 
+            {
+                method: 'DELETE'            
+            }).then(response=>{
+                if(response.status!=200){
+                    console.log('pasasiDel')
+                    
+                }
+            })
+        setTimeout(location.reload(),1000)
+    }
+})
+
+
+
+
+
+Create_Genre_Button.onclick=function(event){
+    let GN = Create_Genre_Name.value
+    
+    fetch('https://localhost:7117/api/genre', 
+    {
+        method: 'POST',
+        headers:{
+            'accept':'*/*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"name":GN})
+    }).then(response=>{
+        if(response.status!=200){
+            console.log('pasasi')
+        }
+    })
+}
+
+Create_Actor_Button.onclick=function(event){
+    let AN = Create_Actor_Name.value
+    let AY = Create_Actor_Year.value
+    fetch('https://localhost:7117/api/actor/create', 
+    {
+        method: 'POST',
+        headers:{
+            'accept':'*/*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"name":AN, "dateOfBirth":AY})
+    }).then(response=>{
+        if(response.status!=200){
+            console.log('pasasi')
+        }
+    })
+}
+
 
 
 let genres = document.getElementById('genres')
 let categories = document.getElementById('categories')
+let all_genres = document.getElementById('all_genres')
+let all_actors = document.getElementById('all_actors')
+
+
+
+
 window.onload=function(event){
+    event.preventDefault()
+
     
+
+
+    fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
+        //console.log(data.actorsViewModels)
+        console.log(data)
+        all_genres.innerHTML="<ul>"
+        for(let key in data.entities){
+            console.log(data.entities[key].name)
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            all_genres.innerHTML+="<li gid='"+data.entities[key].id+"'>"+data.entities[key].name +" <button class='delete_genre'>Delete genre</button></li>"
+            
+            
+        }
+        all_genres.innerHTML+="</ul>"
+        
+    
+        
+    })
+    fetch('https://localhost:7117/api/actor/getall').then(res=>res.json()).then(data=>{
+        //console.log(data.actorsViewModels)
+        console.log(data)
+        all_actors.innerHTML="<ul>"
+        for(let key in data.entities){
+            console.log(data.entities[key].name)
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            all_actors.innerHTML+="<li aid='"+data.entities[key].id+"'>"+data.entities[key].name +" <p class='BDay' >"+data.entities[key].dateOfBirth+"</p><button class='delete_actor'>Delete actor</button></li>"
+            
+            
+        }
+        all_actors.innerHTML+="</ul>"
+        
+    
+        
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
@@ -35,7 +187,24 @@ window.onload=function(event){
             //console.log(data.entities[key].name)
             
             //let actorList=new Array()
-            genres.innerHTML+='<input type="checkbox" name="genre" class="genre" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
+            genres.innerHTML+='<input type="checkbox" name="genre" class="genre1" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
+            
+            
+        }
+        
+    
+        
+    })
+    fetch('https://localhost:7117/api/contentcategories/getall').then(res=>res.json()).then(data=>{
+        //console.log(data.actorsViewModels)
+        console.log(data)
+        
+        for(let key in data){
+            console.log(data[key].name)
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            categories.innerHTML+='<input type="radio" name="genre" class="categ1" value="'+ data[key].id+'"><label for="'+data[key].id+'">'+data[key].name+'</label> <br>'
             
             
         }
@@ -44,7 +213,7 @@ window.onload=function(event){
         
     })
     
-    fetch('https://localhost:7117/api/content/getall?PageNumber=1&PageSize=20')
+    fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
             console.log(data.entities)
             for(let key in data.entities){
@@ -65,23 +234,7 @@ window.onload=function(event){
 
 
 
-    // fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
-    //     //console.log(data.actorsViewModels)
-    //     console.log(data)
-        
-    //     for(let key in data.entities){
-    //         console.log(data.entities[key].name)
-    //         //console.log(data.entities[key].name)
-            
-    //         //let actorList=new Array()
-    //         genres.innerHTML+='<input type="checkbox" name="genre" class="genre" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
-            
-            
-    //     }
-        
     
-        
-    // })
 
 }
 
@@ -92,15 +245,23 @@ Create_Button.onclick=function(event){
     event.preventDefault()
     let name = document.getElementById("Create_title").value
     let year = document.getElementById("Create_year").value
-    let genres_list = document.querySelectorAll(".genre")
+    let genres_list = document.querySelectorAll(".genre1")
     let checked_arr=[]
     for(let key in genres_list){
         if(genres_list[key].checked){
             checked_arr.push(genres_list[key].getAttribute('value'))
         }
     }
+    let categ_list = document.querySelectorAll(".categ1")
+    let checked_arrCateg=[]
+    for(let key in categ_list){
+        if(categ_list[key].checked){
+            checked_arrCateg.push(categ_list[key].getAttribute('value'))
+        }
+    }
     console.log(genres_list)
     console.log(checked_arr)
+    console.log(checked_arrCateg)
 
 
 
@@ -190,38 +351,39 @@ function CreateResultItem3(title,content_id){//create content element
 }
 
 prev.onclick = function(event){
-    if(Page>1){
-        Page--
+    if(page>1){
+        page--
     }
     next.classList.remove('closed')
-    console.log(title.value)
+    //console.log(title.value)
     //result.innerHTML = title.value;
-    event.preventDefault()
+    //event.preventDefault()
     //if(localStorage.getItem('id'){
-    console.log(title.value)
+    //console.log(title.value)
+    //result.innerHTML = title.value;
+    //event.preventDefault()
+    //result.innerHTML=''
+    //console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
-    result.innerHTML=''
-    console.log(title.value)
-    //result.innerHTML = title.value;
-    event.preventDefault()
-    let url = 'https://localhost:7117/api/content/getall?UserName='+title.value +'&PageNumber='+Page+'&PageSize='+PageAmount
-    //let mapActors
-    
-    //const actorList =[];
-    fetch(url)
+    fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
-            //console.log(data.entities)
+            console.log(data.entities)
             for(let key in data.entities){
                 //console.log(data.entities[key].name)
                 
                 //let actorList=new Array()
                 
                 
-                result.append(CreateResultItem3(data.entities[key].nickName, data.entities[key].id))
+                result.append(CreateResultItem3(data.entities[key].name, data.entities[key].id))
             }
-            
-        } )    
+            if(data.hasNext==false){
+                next.classList.add('closed')
+            }
+            if(data.hasPrevious==false){
+                prev.classList.add('closed')
+            }
+        } )   
     //}
     //let resultItem = CreateResultItem(title,2003,actorList)
 
@@ -230,38 +392,37 @@ prev.onclick = function(event){
     
 }
 next.onclick = function(event){
-    Page++;
-    console.log(title.value)
+    page++;
+    prev.classList.remove('closed')
+    //console.log(title.value)
     //result.innerHTML = title.value;
-    event.preventDefault()
+    //event.preventDefault()
     //if(localStorage.getItem('id'){
-    console.log(title.value)
+    //console.log(title.value)
     //result.innerHTML = title.value;
-    event.preventDefault()
+    //event.preventDefault()
     result.innerHTML=''
-    console.log(title.value)
+    //console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
-    let url = 'https://localhost:7117/api/content/getall?UserName='+title.value +'&PageNumber='+Page+'&PageSize='+PageAmount
-    //let mapActors
-    
-    //const actorList =[];
-    fetch(url)
+    fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
-            //console.log(data.entities)
+            console.log(data.entities)
             for(let key in data.entities){
                 //console.log(data.entities[key].name)
                 
                 //let actorList=new Array()
                 
                 
-                result.append(CreateResultItem3(data.entities[key].nickName, data.entities[key].id))
+                result.append(CreateResultItem3(data.entities[key].name, data.entities[key].id))
             }
-            console.log(data)
             if(data.hasNext==false){
                 next.classList.add('closed')
             }
-        } )   
+            if(data.hasPrevious==false){
+                prev.classList.add('closed')
+            }
+        } ) 
      
     //}
     //let resultItem = CreateResultItem(title,2003,actorList)
@@ -275,34 +436,7 @@ next.onclick = function(event){
 
 
 result.addEventListener('click',function(event){
-    if(event.target.classList.contains('more')){//toggle additional content on content item
-        let More = event.target;
-        result.innerHTML=''
-        result.innerHTML=`<h2>You are watching ${More.parentElement.children[0].innerText} content</h2>`
-        
-        //Toggle.innerHTML = 'Less'
-        
-        let Item = More.parentElement
-        
-
-        //AC.innerHTML=''
-        let UID = Item.getAttribute('uid')
-        let userUrl = 'https://localhost:7117/api/user/'+ UID
-        fetch(userUrl).then(res=>res.json()).then(data=>{
-            //console.log(data.actorsViewModels)
-            console.log(data)
-            for(let key in data.contentViewModels){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
-                result.append(CreateResultItem(data.contentViewModels[key].name, data.contentViewModels[key].releaseDate.substring(data.contentViewModels[key].releaseDate.length-4), data.contentViewModels[key].id))
-            }
-            
-        
-            
-        })
+   
 
         // let Result2 = Toggle.parentElement.children[2]
         // if(Result2.classList.contains('closed')){
@@ -316,7 +450,7 @@ result.addEventListener('click',function(event){
         // }
         //console.log(Result2)
         
-    }
+    
     if(event.target.id=='Update_button'){
         event.preventDefault()
         let update = event.target;
@@ -364,6 +498,27 @@ result.addEventListener('click',function(event){
             }
         })
     }
+
+    if(event.target.classList.contains('delete')){//toggle additional content on content item
+        let Delete = event.target;
+        let id = Delete.parentElement.getAttribute('cid')
+        console.log(id)
+        let url = 'https://localhost:7117/api/content/' + id
+        fetch(url, 
+        {
+            method: 'DELETE'            
+        }).then(response=>{
+            if(response.status!=200){
+                console.log('pasasiDel')
+                
+            }
+        })
+    } 
+
+
+
+
+
     if(event.target.classList.contains('edit')){//toggle additional content on content item
         let Edit = event.target;
         
@@ -394,25 +549,25 @@ result.addEventListener('click',function(event){
         
         })
 //categ
-        // fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
-        // //console.log(data.actorsViewModels)
-        // console.log(data)
-        // let genres = Edit.parentElement.parentElement.children[1].children[0].children[2]
-        // console.log(genres)
-        // for(let key in data.entities){
-        //     console.log(data.entities[key].name)
-        //     //console.log(data.entities[key].name)
+        fetch('https://localhost:7117/api/contentcategories/getall').then(res=>res.json()).then(data=>{
+        //console.log(data.actorsViewModels)
+        console.log(data)
+        let categ = Edit.parentElement.parentElement.children[1].children[0].children[2]
+        console.log(genres)
+        for(let key in data){
+            console.log(data[key].name)
+            //console.log(data.entities[key].name)
             
-        //     //let actorList=new Array()
-        //     genres.innerHTML+='<input type="checkbox" name="genre" class="genre" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
+            //let actorList=new Array()
+            categ.innerHTML+='<input type="radio" name="genre" class="categ" value="'+ data[key].id+'"><label for="'+data[key].id+'">'+data[key].name+'</label> <br>'
             
             
-        // }
+        }
         
         
     
         
-        // })
+        })
 //actors
         fetch('https://localhost:7117/api/actor/getall').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
