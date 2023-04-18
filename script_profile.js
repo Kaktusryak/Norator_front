@@ -50,8 +50,8 @@ window.onload=function(event){
             console.log(data)
             
             for(let key in data.contentViewModels){
-                console.log(data.contentViewModels[key].name)
-                //console.log(data.entities[key].name)
+                //console.log(data.contentViewModels[key].name)
+                //console.log(data)
                 
                 //let actorList=new Array()
                 

@@ -21,6 +21,7 @@
     <div class="main">
         <div class="main-search">
             <button id="Toggle-search"><p class='red'>To Search by Actor</p></button>
+
             <form action="" id="byTitle">
                 <input type="text" id="content-title1" class="text">
                 <input type="submit" value="Find by Title" id="find-title"> 
@@ -28,6 +29,15 @@
             <form action="" id="byActor" class="closed">
                 <input type="text" id="content-title2" class="text">
                 <input type="submit" value="Find by Actor" id="find-actor"> 
+            </form>
+            <form id="categ_form">
+                <p>Get top 20 of:</p>
+                <input type="radio" class="Categ_index" id="Any" name="drone" value="0" checked><label >Any</label>
+                <input type="radio" class="Categ_index" id="Movie" name="drone" value="1"><label >Movie</label>
+                <input type="radio" class="Categ_index" id="Series" name="drone" value="2"><label >Series</label>
+                <input type="radio" class="Categ_index" id="Cartoon" name="drone" value="3"><label >Cartoon</label>
+                <input type="radio" class="Categ_index" id="Game" name="drone" value="4"><label >Game</label>
+                <input type="radio" class="Categ_index" id="Book" name="drone" value="5"><label >Book</label>
             </form>
         </div>
         <div class="main-result">

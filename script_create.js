@@ -123,7 +123,7 @@ window.onload=function(event){
     
 
 
-    fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
+    fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
         all_genres.innerHTML="<ul>"
@@ -141,7 +141,7 @@ window.onload=function(event){
     
         
     })
-    fetch('https://localhost:7117/api/actor/getall').then(res=>res.json()).then(data=>{
+    fetch('https://localhost:7117/api/actor/getall?PageSize=9999').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
         all_actors.innerHTML="<ul>"
@@ -178,7 +178,7 @@ window.onload=function(event){
 
 
 
-    fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
+    fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
         
@@ -253,15 +253,15 @@ Create_Button.onclick=function(event){
         }
     }
     let categ_list = document.querySelectorAll(".categ1")
-    let checked_arrCateg=[]
+    let checked_Categ
     for(let key in categ_list){
         if(categ_list[key].checked){
-            checked_arrCateg.push(categ_list[key].getAttribute('value'))
+            checked_Categ=categ_list[key].getAttribute('value')
         }
     }
     console.log(genres_list)
     console.log(checked_arr)
-    console.log(checked_arrCateg)
+    console.log(checked_Categ)
 
 
 
@@ -272,7 +272,7 @@ Create_Button.onclick=function(event){
             'accept':'*/*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"name":name, "releaseDate":year, "contentCategoryId":1, "genres":checked_arr, "actors":[]})
+        body: JSON.stringify({"name":name, "releaseDate":year, "contentCategoryId":checked_Categ, "genres":checked_arr, "actors":[]})
     }).then(response=>{
         if(response.status!=200){
             console.log('pasasi')
@@ -362,10 +362,11 @@ prev.onclick = function(event){
     //console.log(title.value)
     //result.innerHTML = title.value;
     //event.preventDefault()
-    //result.innerHTML=''
+    result.innerHTML=''
     //console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
+    console.log(page)
     fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
             console.log(data.entities)
@@ -394,6 +395,7 @@ prev.onclick = function(event){
 next.onclick = function(event){
     page++;
     prev.classList.remove('closed')
+    console.log(page)
     //console.log(title.value)
     //result.innerHTML = title.value;
     //event.preventDefault()
@@ -520,16 +522,17 @@ result.addEventListener('click',function(event){
 
 
     if(event.target.classList.contains('edit')){//toggle additional content on content item
+
         let Edit = event.target;
-        
-        
-        let Item2 = Edit.parentElement.parentElement.children[1]
+        if(Edit.innerHTML=='Edit'){
+            Edit.innerHTML="Hide"
+            let Item2 = Edit.parentElement.parentElement.children[1]
         Item2.classList.remove('closed')
         Item2.innerHTML = ' <form action="" id="Create_content_form" name="Create"><input name="Title"type="text" id="Create_title" class="text"><input name="Year"type="date" id="Create_year" class="text"> <div id="categories"></div><div class="genres"></div><div class="actors"></div><input type="submit" value="Update" id="Update_button">  </form>'
         console.log(Item2)
-        Edit.classList.add('closed')
+        //Edit.classList.add('closed')
 //genres
-        fetch('https://localhost:7117/api/genre/getall').then(res=>res.json()).then(data=>{
+        fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
         let genres = Edit.parentElement.parentElement.children[1].children[0].children[3]
@@ -539,7 +542,7 @@ result.addEventListener('click',function(event){
             //console.log(data.entities[key].name)
             
             //let actorList=new Array()
-            genres.innerHTML+='<input type="checkbox" name="genre" class="genre" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
+            genres.innerHTML+='<input type="checkbox" name="genre" class="genre " value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
             
             
         }
@@ -569,7 +572,7 @@ result.addEventListener('click',function(event){
         
         })
 //actors
-        fetch('https://localhost:7117/api/actor/getall').then(res=>res.json()).then(data=>{
+        fetch('https://localhost:7117/api/actor/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
         //console.log(data.actorsViewModels)
         console.log(data)
         let actors = Edit.parentElement.parentElement.children[1].children[0].children[4]
@@ -579,7 +582,7 @@ result.addEventListener('click',function(event){
             //console.log(data.entities[key].name)
             
             //let actorList=new Array()
-            actors.innerHTML+='<input type="checkbox" name="genre" class="actor" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
+            actors.innerHTML+='<input type="checkbox" name="genre" class="actor " value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
             
             
         }
@@ -593,6 +596,14 @@ result.addEventListener('click',function(event){
 
 
        
+        }
+        else{
+            let Item2 = Edit.parentElement.parentElement.children[1]
+            Item2.classList.add('closed')
+            Edit.innerHTML="Edit"
+        }
+        
+        
         
         
         

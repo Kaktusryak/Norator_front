@@ -65,7 +65,7 @@ function CreateResultItem(title,year,Cont_id){//create content element
 
 
 
-    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div><div class=genres_item></div><div class=category_item></div>'
+    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors1></div><div class=genres_item></div><div class=category_item></div>'
     
     
     resultItem2.setAttribute('CID', Cont_id)

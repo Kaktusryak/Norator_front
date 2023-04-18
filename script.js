@@ -16,6 +16,57 @@ let SearchToggle = document.getElementById("Toggle-search")
 //let actorList = ['chuk','gek','cheburek']
 
 
+let Categories_radio = document.querySelectorAll(".Categ_index")
+
+
+
+let Categ_form = document.getElementById("categ_form")
+
+Categ_form.onchange=function(event){
+    result.innerHTML=''
+    event.preventDefault()
+    let categ_id=0
+    for(let key in Categories_radio){
+        if(Categories_radio[key].checked){
+            categ_id = Categories_radio[key].value
+        }
+    }
+    if(categ_id==0){
+        fetch('https://localhost:7117/api/content/gettop20')
+        .then(res=>res.json()).then(data => {
+        console.log(data)
+        for(let key in data){
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            
+            
+            result.append(CreateResultItem(data[key].name, data[key].releaseDate.substring(0,4), data[key].id))
+        }
+    } )
+    }
+    else{
+        fetch('https://localhost:7117/api/content/gettop20/'+categ_id)
+        .then(res=>res.json()).then(data => {
+        console.log(data)
+        for(let key in data){
+            //console.log(data.entities[key].name)
+            
+            //let actorList=new Array()
+            
+            
+            result.append(CreateResultItem(data[key].name, data[key].releaseDate.substring(0,4), data[key].id))
+        }
+    } )
+    }
+
+}
+
+
+
+
+
+
 
 
 let profButton = document.getElementById('button2')
@@ -65,7 +116,7 @@ function CreateResultItem(title,year,Cont_id){//create content element
 
 
 
-    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div><div class=genres_item></div><div class=category_item></div>'
+    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors1></div><div class=genres_item></div><div class=category_item></div>'
     
     
     resultItem2.setAttribute('CID', Cont_id)
@@ -95,6 +146,10 @@ find.onclick = function(event){//searching for content by title name
     console.log(title.value)
     //result.innerHTML = title.value;
     event.preventDefault()
+
+    
+
+
     let url = 'https://localhost:7117/api/content/getall?FilterParam='+title.value +'&PageNumber=1&PageSize=20'
     //let mapActors
     
@@ -291,3 +346,7 @@ window.onload=function(event){
 
 
 }
+
+
+
+

@@ -227,14 +227,26 @@ h2{
     color:white;
 }
 .actors{
-    color:aquamarine
+    color:aquamarine;
+    height: 300px;
+    overflow-y: scroll;
 }
+.genres{
+    color:aquamarine;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+
+
 .categ{
     color: darksalmon;
 }
 .pagination{
     width: 200px;
     height: 50px;
+    display: flex;
+
 }
 .pagination button{
     width: 100px;
@@ -264,10 +276,35 @@ h2{
     flex-direction: row;
 }
 #all_actors{
+    
     color: white;
+    height: 500px;
+    overflow-y: scroll;
+
+}
+
+#all_actors button{
+    height: fit-content;
+    margin-bottom: 20px;
+    
+
+}
+#all_genres button{
+    height: fit-content;
+    margin-bottom: 20px;
+    
+
 }
 #all_genres{
+    
     color: white;
+    height: 500px;
+    overflow-y: scroll;
 }
+.main_pagin{
+    display: flex;
+    justify-content: center;
+}
+
 
 
