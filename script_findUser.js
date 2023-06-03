@@ -13,7 +13,6 @@ let item1 = '<div class="result-item"><div class="title"><p>'
 let item2 = '</p></div><button class="add">Add</button></div>'
 let Page = 1;
 let PageAmount = 1;
-//let actorList = ['chuk','gek','cheburek']
 
 let prevButton = document.getElementById('prev')
 let nextButton = document.getElementById('next')
@@ -25,15 +24,15 @@ let findUserButton = document.getElementById('button1')
 let homeButton = document.getElementById('home')
 
 profButton.onclick =function(){
-    console.log('klklklklk')
+
     window.location="profile.html"
 }
 homeButton.onclick =function(){
-    console.log('adasdsadada')
+
     window.location.href="index.html"
 }
 findUserButton.onclick =function(){
-    console.log('adasdsadada')
+
     window.location.href="findUser.html"
 }
 
@@ -102,14 +101,6 @@ function CreateResultItem1(title,User_id){//create content element
     titleItem.classList.add("title")
     let moreButton = document.createElement("button")
     moreButton.classList.add("more")
-
-   
-    
-
-
-
-
-    //resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div>'
     
     
     resultItem1.setAttribute('UID', User_id)
@@ -122,8 +113,6 @@ function CreateResultItem1(title,User_id){//create content element
     resultItem1.append(titleItem)
     resultItem1.append(moreButton)
     resultItem.append(resultItem1)
-    
-    //resultItem.append(resultItem2)
 
     return resultItem
 
@@ -135,66 +124,34 @@ prev.onclick = function(event){
     }
     next.classList.remove('closed')
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
-    //if(localStorage.getItem('id'){
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     result.innerHTML=''
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     let url = 'https://localhost:7117/api/content/getall?UserName='+title.value +'&PageNumber='+Page+'&PageSize='+PageAmount
-    //let mapActors
-    
-    //const actorList =[];
     fetch(url)
         .then(res=>res.json()).then(data => {
-            //console.log(data.entities)
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
                 result.append(CreateResultItem1(data.entities[key].nickName, data.entities[key].id))
             }
             
         } )    
-    //}
-    //let resultItem = CreateResultItem(title,2003,actorList)
-
-
-    //result.append(resultItem)
-    
 }
 next.onclick = function(event){
     Page++;
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
-    //if(localStorage.getItem('id'){
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     result.innerHTML=''
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     let url = 'https://localhost:7117/api/content/getall?UserName='+title.value +'&PageNumber='+Page+'&PageSize='+PageAmount
-    //let mapActors
-    
-    //const actorList =[];
     fetch(url)
         .then(res=>res.json()).then(data => {
-            //console.log(data.entities)
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
                 result.append(CreateResultItem1(data.entities[key].nickName, data.entities[key].id))
             }
             console.log(data)
@@ -202,38 +159,23 @@ next.onclick = function(event){
                 next.classList.add('closed')
             }
         } )   
-     
-    //}
-    //let resultItem = CreateResultItem(title,2003,actorList)
-
-
-    //result.append(resultItem)
-    
 }
 
 findByUser.onclick = function(event){
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
-    //if(localStorage.getItem('id'){
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     result.innerHTML=''
     console.log(title.value)
-    //result.innerHTML = title.value;
     event.preventDefault()
     let url = 'https://localhost:7117/api/user/getall?FilterParam='+title.value+'&PageNumber=1&PageSize=20'
-    //let mapActors
     
     const actorList =[];
     fetch(url)
         .then(res=>res.json()).then(data => {
-            //console.log(data.entities)
+
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
                 
                 
                 result.append(CreateResultItem1(data.entities[key].nickName, data.entities[key].id))
@@ -246,11 +188,7 @@ findByUser.onclick = function(event){
             }
         } )    
 }
-    //let resultItem = CreateResultItem(title,2003,actorList)
 
-
-    //result.append(resultItem)
-    
 
 
 
@@ -258,44 +196,21 @@ result.addEventListener('click',function(event){
     if(event.target.classList.contains('more')){//toggle additional content on content item
         let More = event.target;
         result.innerHTML=''
-        result.innerHTML=`<h2>You are watching ${More.parentElement.children[0].innerText} content</h2>`
-        
-        //Toggle.innerHTML = 'Less'
-        
+        result.innerHTML=`<h2>You are watching ${More.parentElement.children[0].innerText} content</h2>`       
         let Item = More.parentElement
-        
 
-        //AC.innerHTML=''
         let UID = Item.getAttribute('uid')
         let userUrl = 'https://localhost:7117/api/user/'+ UID
         fetch(userUrl).then(res=>res.json()).then(data=>{
-            //console.log(data.actorsViewModels)
             console.log(data)
             for(let key in data.contentViewModels){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
                 result.append(CreateResultItem(data.contentViewModels[key].name, data.contentViewModels[key].releaseDate.substring(0,4), data.contentViewModels[key].id))
             }
             
         
             
         })
-
-        // let Result2 = Toggle.parentElement.children[2]
-        // if(Result2.classList.contains('closed')){
-        //     Result2.classList.remove('closed')
-        //     Toggle.innerHTML = 'Less'
-        // }
-        // else{
-        //     Result2.classList.add('closed')
-        //     Toggle.innerHTML = 'More'
-
-        // }
-        //console.log(Result2)
-        
+ 
     }
     if(event.target.classList.contains('toggle')){//toggle additional content on content item
         let Toggle = event.target;
@@ -311,7 +226,6 @@ result.addEventListener('click',function(event){
         let CID = Item2.getAttribute('cid')
         let actorsUrl = 'https://localhost:7117/api/content/'+ CID
         fetch(actorsUrl).then(res=>res.json()).then(data=>{
-            //console.log(data.actorsViewModels)
             AC.innerHTML+='<ul>'
             GC.innerHTML+='<ul>'
             CC.innerHTML+='<p>'
@@ -363,7 +277,7 @@ result.addEventListener('click',function(event){
                 body: JSON.stringify({"userId":localStorage.getItem('UID'), "contentId":CID})
             }).then(response=>{
                 if(response.status!=200){
-                    console.log('pasasi')
+                    console.log('Error!')
                 }
             })
 
@@ -385,7 +299,6 @@ result.addEventListener('click',function(event){
 let isLogged = localStorage.getItem('IsLogged')
 window.onload=function(event){
     event.preventDefault()
-    //alert('Loaded')
     
     let nickname = localStorage.getItem('Nickname')
     console.log(localStorage)

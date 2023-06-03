@@ -46,9 +46,10 @@ button{
     width: 100%;
     background-color: rgb(0, 0, 0);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content:space-evenly;
+    align-items:center;
     color: white;
+
 }
 .main-search1{
     height: 400px;
@@ -81,21 +82,64 @@ input[type=text]{
     border-radius: 20px;
     
 }
+#content-title1{
+    width: 400px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+    
+}
+#content-title2{
+    width: 400px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+    
+}
 .text{
     padding-left: 20px;
     
 }
+#prev{
+    font-size: 20px;
+}
+#next{
+    font-size: 20px;
+}
+#register{
+    font-size: 20px;
+}
+#login{
+    font-size: 20px;
+}
 #find-title{
-    width: 120px;
-    height: 40px;
+    font-size: 18px;
+    width: 150px;
+    height: 60px;
     color: white;
     border: 1px greenyellow solid;
     background-color: black;
     border-radius: 20px;
 }
-#find-actor{
-    width: 120px;
+#find-user{
+    font-size: 18px;
+}
+#password{
+    width: 400px;
     height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+}
+#nickname{
+    width: 400px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+}
+#find-actor{
+    font-size: 18px;
+    width: 150px;
+    height: 60px;
     color: white;
     border: 1px rgb(255, 47, 47) solid;
     background-color: black;
@@ -159,7 +203,7 @@ input[type=text]{
     justify-content: center;
     align-items: center;
     color: white;
-    font-size: 40px;
+    font-size: 20px;
     
 }
 .add{
@@ -182,6 +226,7 @@ input[type=text]{
 
 
 }
+
 #button1{
     background-color: black;
     border-radius: 20px;
@@ -206,6 +251,7 @@ input[type=text]{
     font-size: 20px;
 }
 #Toggle-search{
+    font-size: 20px;
     position: absolute;
     top:100px;
     left:0;
@@ -213,7 +259,7 @@ input[type=text]{
     background-color: black;
     border-radius: 0 20px 20px 0;
     color: white;
-    width: 170px;
+    width: 180px;
     border: 1px solid white;
     
 }
@@ -227,20 +273,35 @@ h2{
     color:white;
 }
 .actors{
-    color:aquamarine;
+    
     height: 300px;
     overflow-y: scroll;
+    font-size: 20px;
+}
+.actors label{
+    
+    margin-left: 20px;
 }
 .genres{
-    color:aquamarine;
     height: 300px;
     overflow-y: scroll;
 }
+.genres label{
+    margin-left: 20px;
+}
+.forbiden{
+    text-align: center;
+    color: white;
+}
 
-
-
+.main-search1{
+    border-radius: 50px;
+}
 .categ{
     color: darksalmon;
+}
+#categ_form{
+    font-size: 20px;
 }
 .pagination{
     width: 200px;
@@ -260,6 +321,16 @@ h2{
 .delete{
     border-color:crimson;
 }
+.delete_actor{
+    font-size: 20px;
+    width:15vw;
+    margin-top: 10px;
+}
+.delete_genre{
+    font-size: 20px;
+    width:15vw;
+    margin-top: 10px;
+}
 .main_create_genre{
     height: 100px;
     width: 100%;
@@ -268,11 +339,74 @@ h2{
     height: 100px;
     width: 100%;
 }
+#Create_actor_button{
+    font-size: 18px;
+}
+#Create_genre_button{
+    font-size: 18px;
+}
+#Create_title{
+    font-size: 18px;
+    width: 250px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px; 
+}
+#categories{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#categories label{
+    margin-left: 20px;
+}
+#genres{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#genres label{
+    margin-left: 20px;
+}
+.genres{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#Create_year{
+    font-size: 18px;
+    width: 250px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px; 
+}
+#Create_button{
+    font-size: 20px;
+    width: 100%;
+}
+#Actor_name{
+    font-size: 18px;
+    width: 250px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+}
+#Actor_year{
+    font-size: 18px;
+    width: 150px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+}
+#Genre_name{
+    font-size: 18px;
+    width: 250px;
+    height: 40px;
+    border: 1px rgb(0, 255, 200) solid;
+    border-radius: 20px;
+}
 #Creates{
     height: 800px;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-direction: row;
 }
 #all_actors{
@@ -281,6 +415,18 @@ h2{
     height: 500px;
     overflow-y: scroll;
 
+}
+#all_actors li{
+    width:15vw;
+    font-size: 20px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+#all_genres li{
+    width:15vw;
+    font-size: 20px;
+    height: 80px;
+    margin-bottom: 20px;
 }
 
 #all_actors button{
@@ -305,6 +451,21 @@ h2{
     display: flex;
     justify-content: center;
 }
-
+.main{
+    
+    background-color: black;
+    height: 120px;
+}
+.main-search{
+    padding-left: 170px;
+}
+#unlog{
+    margin-right: 170px;
+}
+#main-cre{
+    height: 700px;
+    padding-left: 20vw;
+    padding-right: 20vw;
+}
 
 

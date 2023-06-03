@@ -8,15 +8,15 @@ let CreateButton = document.getElementById('button3')
 let homeButton = document.getElementById('home')
 
 profButton.onclick =function(){
-    console.log('klklklklk')
+
     window.location="profile.html"
 }
 homeButton.onclick =function(){
-    console.log('adasdsadada')
+
     window.location.href="index.html"
 }
 findUserButton.onclick =function(){
-    console.log('adasdsadada')
+
     window.location.href="findUser.html"
 }
 
@@ -43,7 +43,8 @@ Creates.addEventListener('click',function(event){
                 method: 'DELETE'            
             }).then(response=>{
                 if(response.status!=200){
-                    console.log('pasasiDel')
+                    console.log('Error!')
+                    
                     
                 }
             })
@@ -59,7 +60,7 @@ Creates.addEventListener('click',function(event){
                 method: 'DELETE'            
             }).then(response=>{
                 if(response.status!=200){
-                    console.log('pasasiDel')
+                    console.log('Error!')
                     
                 }
             })
@@ -84,7 +85,7 @@ Create_Genre_Button.onclick=function(event){
         body: JSON.stringify({"name":GN})
     }).then(response=>{
         if(response.status!=200){
-            console.log('pasasi')
+            console.log('Error!')
         }
     })
 }
@@ -102,7 +103,7 @@ Create_Actor_Button.onclick=function(event){
         body: JSON.stringify({"name":AN, "dateOfBirth":AY})
     }).then(response=>{
         if(response.status!=200){
-            console.log('pasasi')
+            console.log('Error!')
         }
     })
 }
@@ -115,25 +116,16 @@ let all_genres = document.getElementById('all_genres')
 let all_actors = document.getElementById('all_actors')
 
 
-
-
 window.onload=function(event){
     event.preventDefault()
 
-    
-
-
     fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
+
         console.log(data)
         all_genres.innerHTML="<ul>"
         for(let key in data.entities){
             console.log(data.entities[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
-            all_genres.innerHTML+="<li gid='"+data.entities[key].id+"'>"+data.entities[key].name +" <button class='delete_genre'>Delete genre</button></li>"
-            
+            all_genres.innerHTML+="<li gid='"+data.entities[key].id+"'>"+data.entities[key].name +" <button class='delete_genre'>Delete genre</button></li>"    
             
         }
         all_genres.innerHTML+="</ul>"
@@ -142,17 +134,12 @@ window.onload=function(event){
         
     })
     fetch('https://localhost:7117/api/actor/getall?PageSize=9999').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
         console.log(data)
         all_actors.innerHTML="<ul>"
         for(let key in data.entities){
             console.log(data.entities[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
             all_actors.innerHTML+="<li aid='"+data.entities[key].id+"'>"+data.entities[key].name +" <p class='BDay' >"+data.entities[key].dateOfBirth+"</p><button class='delete_actor'>Delete actor</button></li>"
-            
-            
+ 
         }
         all_actors.innerHTML+="</ul>"
         
@@ -162,66 +149,37 @@ window.onload=function(event){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
+
         console.log(data)
         
         for(let key in data.entities){
             console.log(data.entities[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
             genres.innerHTML+='<input type="checkbox" name="genre" class="genre1" value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
             
             
         }
-        
-    
+
         
     })
     fetch('https://localhost:7117/api/contentcategories/getall').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
+
         console.log(data)
         
         for(let key in data){
             console.log(data[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
+
             categories.innerHTML+='<input type="radio" name="genre" class="categ1" value="'+ data[key].id+'"><label for="'+data[key].id+'">'+data[key].name+'</label> <br>'
-            
-            
+  
         }
-        
-    
-        
+
     })
     
     fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
             console.log(data.entities)
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
+
                 result.append(CreateResultItem3(data.entities[key].name, data.entities[key].id))
             }
             if(data.hasNext==false){
@@ -231,10 +189,6 @@ window.onload=function(event){
                 prev.classList.add('closed')
             }
         } )    
-
-
-
-    
 
 }
 
@@ -275,29 +229,11 @@ Create_Button.onclick=function(event){
         body: JSON.stringify({"name":name, "releaseDate":year, "contentCategoryId":checked_Categ, "genres":checked_arr, "actors":[]})
     }).then(response=>{
         if(response.status!=200){
-            console.log('pasasi')
+            console.log('Error!')
         }
     })
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////
-
-
 
 
 
@@ -322,14 +258,7 @@ function CreateResultItem3(title,content_id){//create content element
     let deleteButton = document.createElement("button")
     deleteButton.classList.add("delete")
 
-   
-    
 
-
-
-
-    //resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors></div>'
-    
     
     resultItem1.setAttribute('Cid', content_id)
 
@@ -355,27 +284,14 @@ prev.onclick = function(event){
         page--
     }
     next.classList.remove('closed')
-    //console.log(title.value)
-    //result.innerHTML = title.value;
-    //event.preventDefault()
-    //if(localStorage.getItem('id'){
-    //console.log(title.value)
-    //result.innerHTML = title.value;
-    //event.preventDefault()
     result.innerHTML=''
-    //console.log(title.value)
-    //result.innerHTML = title.value;
+
     event.preventDefault()
     console.log(page)
     fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
             console.log(data.entities)
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
                 result.append(CreateResultItem3(data.entities[key].name, data.entities[key].id))
             }
             if(data.hasNext==false){
@@ -385,37 +301,20 @@ prev.onclick = function(event){
                 prev.classList.add('closed')
             }
         } )   
-    //}
-    //let resultItem = CreateResultItem(title,2003,actorList)
 
-
-    //result.append(resultItem)
-    
 }
 next.onclick = function(event){
     page++;
     prev.classList.remove('closed')
     console.log(page)
-    //console.log(title.value)
-    //result.innerHTML = title.value;
-    //event.preventDefault()
-    //if(localStorage.getItem('id'){
-    //console.log(title.value)
-    //result.innerHTML = title.value;
-    //event.preventDefault()
     result.innerHTML=''
-    //console.log(title.value)
-    //result.innerHTML = title.value;
+
     event.preventDefault()
     fetch('https://localhost:7117/api/content/getall?PageNumber='+page+'&PageSize='+ psize)
         .then(res=>res.json()).then(data => {
             console.log(data.entities)
             for(let key in data.entities){
-                //console.log(data.entities[key].name)
-                
-                //let actorList=new Array()
-                
-                
+
                 result.append(CreateResultItem3(data.entities[key].name, data.entities[key].id))
             }
             if(data.hasNext==false){
@@ -425,33 +324,14 @@ next.onclick = function(event){
                 prev.classList.add('closed')
             }
         } ) 
-     
-    //}
-    //let resultItem = CreateResultItem(title,2003,actorList)
 
-
-    //result.append(resultItem)
-    
 }
 
 
 
 
 result.addEventListener('click',function(event){
-   
 
-        // let Result2 = Toggle.parentElement.children[2]
-        // if(Result2.classList.contains('closed')){
-        //     Result2.classList.remove('closed')
-        //     Toggle.innerHTML = 'Less'
-        // }
-        // else{
-        //     Result2.classList.add('closed')
-        //     Toggle.innerHTML = 'More'
-
-        // }
-        //console.log(Result2)
-        
     
     if(event.target.id=='Update_button'){
         event.preventDefault()
@@ -467,7 +347,7 @@ result.addEventListener('click',function(event){
         for(let key in genres_list){
             if(genres_list[key].checked){
                 checked_arr.push(genres_list[key].getAttribute('value'))
-                //console.log(genres_list[key].getAttribute('value') +' g')
+
             }
         }
         
@@ -476,7 +356,7 @@ result.addEventListener('click',function(event){
         for(let key in actors_list){
             if(actors_list[key].checked){
                 checked_arrActors.push(actors_list[key].getAttribute('value'))
-                //console.log(actors_list[key].getAttribute('value') +' a')
+
             }
         }
         console.log(name)
@@ -495,7 +375,7 @@ result.addEventListener('click',function(event){
             body: JSON.stringify({"name":name, "releaseDate":year,"id": id,"contentCategoryId":1, "actorsId":checked_arr, "genresId":checked_arrActors})
         }).then(response=>{
             if(response.status!=200){
-                console.log('pasasi')
+                console.log('Error!')
                 
             }
         })
@@ -511,7 +391,7 @@ result.addEventListener('click',function(event){
             method: 'DELETE'            
         }).then(response=>{
             if(response.status!=200){
-                console.log('pasasiDel')
+                console.log('Error!')
                 
             }
         })
@@ -530,38 +410,29 @@ result.addEventListener('click',function(event){
         Item2.classList.remove('closed')
         Item2.innerHTML = ' <form action="" id="Create_content_form" name="Create"><input name="Title"type="text" id="Create_title" class="text"><input name="Year"type="date" id="Create_year" class="text"> <div id="categories"></div><div class="genres"></div><div class="actors"></div><input type="submit" value="Update" id="Update_button">  </form>'
         console.log(Item2)
-        //Edit.classList.add('closed')
-//genres
+
         fetch('https://localhost:7117/api/genre/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
+
         console.log(data)
         let genres = Edit.parentElement.parentElement.children[1].children[0].children[3]
         console.log(genres)
         for(let key in data.entities){
             console.log(data.entities[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
+
             genres.innerHTML+='<input type="checkbox" name="genre" class="genre " value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
             
             
         }
-        
-        
-    
+
         
         })
-//categ
         fetch('https://localhost:7117/api/contentcategories/getall').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
         console.log(data)
         let categ = Edit.parentElement.parentElement.children[1].children[0].children[2]
         console.log(genres)
         for(let key in data){
             console.log(data[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
+
             categ.innerHTML+='<input type="radio" name="genre" class="categ" value="'+ data[key].id+'"><label for="'+data[key].id+'">'+data[key].name+'</label> <br>'
             
             
@@ -571,43 +442,29 @@ result.addEventListener('click',function(event){
     
         
         })
-//actors
+
         fetch('https://localhost:7117/api/actor/getall?PageNumber=1&PageSize=9999').then(res=>res.json()).then(data=>{
-        //console.log(data.actorsViewModels)
+
         console.log(data)
         let actors = Edit.parentElement.parentElement.children[1].children[0].children[4]
         console.log(genres)
         for(let key in data.entities){
             console.log(data.entities[key].name)
-            //console.log(data.entities[key].name)
-            
-            //let actorList=new Array()
+
             actors.innerHTML+='<input type="checkbox" name="genre" class="actor " value="'+ data.entities[key].id+'"><label for="'+data.entities[key].id+'">'+data.entities[key].name+'</label> <br>'
             
             
         }
-        
-        
-    
-        
+
         })
-        
-        
-
-
-       
+   
         }
         else{
             let Item2 = Edit.parentElement.parentElement.children[1]
             Item2.classList.add('closed')
             Edit.innerHTML="Edit"
         }
-        
-        
-        
-        
-        
-        
+
     }
     if(event.target.classList.contains('add')){//adding content to user favorites
         let LSisLogged = localStorage.getItem('IsLogged')
@@ -627,7 +484,7 @@ result.addEventListener('click',function(event){
                 body: JSON.stringify({"userId":localStorage.getItem('UID'), "contentId":CID})
             }).then(response=>{
                 if(response.status!=200){
-                    console.log('pasasi')
+                    console.log('Error!')
                 }
             })
 
@@ -636,7 +493,7 @@ result.addEventListener('click',function(event){
             console.log(name)
         }
         else{
-            alert('you are not logged')
+            alert('You are not logged')
         }
         
     }
