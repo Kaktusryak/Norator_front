@@ -90,7 +90,7 @@ function CreateResultItem(title,year,Cont_id){//create content element
     let toggleButton = document.createElement("button")
     toggleButton.classList.add("toggle")
     toggleButton.innerHTML = 'More'
-    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors1></div><div class=genres_item></div><div class=category_item></div>'
+    resultItem2.innerHTML = '<div class="year">'+year +'</div> <div class=actors1></div><div class=genres_item></div><div class=category_item></div><div class=NumberOfSubscribers></div>'
     
     
     resultItem2.setAttribute('CID', Cont_id)
@@ -193,17 +193,20 @@ result.addEventListener('click',function(event){
         let AC = Item2.children[1]
         let GC = Item2.children[2]
         let CC = Item2.children[3]
+        let NS = Item2.children[4]
 
         AC.innerHTML=''
         GC.innerHTML=''
         CC.innerHTML=''
+        NS.innerHTML=''
         let CID = Item2.getAttribute('cid')
         let actorsUrl = 'https://localhost:7117/api/content/'+ CID
         fetch(actorsUrl).then(res=>res.json()).then(data=>{
-
+            NS.innerHTML+='<p>'
             AC.innerHTML+='<ul>'
             GC.innerHTML+='<ul>'
             CC.innerHTML+='<p>'
+            
             for(let k in data.actorsViewModels){
                 AC.innerHTML+='<li>'+data.actorsViewModels[k].name+'</li>'
                 
@@ -213,10 +216,12 @@ result.addEventListener('click',function(event){
                 
             }
             CC.innerHTML+=data.contentCategory
-
+            NS.innerHTML+="Subscribers: "+ data.numberOfSubcibers
+            
             AC.innerHTML+='</ul>'
             GC.innerHTML+='</ul>'
             CC.innerHTML+='</p>'
+            NS.innerHTML+='</p>'
         
             
         })
